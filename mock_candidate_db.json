@@ -1,0 +1,512 @@
+{
+  "nurses": [
+    {
+      "id": "N001",
+      "name": "Maria Rodriguez",
+      "phoneNumber": "(305) 555-1234",
+      "highlights": {
+        "yearsOfExperience": 4.5,
+        "specialtyExperience": "3.5+ Years of ER Experience",
+        "otherExperience": [
+          "Med/Surg Float",
+          "Trauma Unit"
+        ],
+        "facilitiesExperience": "Level I Trauma Center Experience",
+        "licenses": [
+          "Active FL Single State RN License"
+        ],
+        "education": "BSN",
+        "languages": [
+          "English",
+          "Spanish"
+        ],
+        "chartingExperience": [
+          "Epic",
+          "Meditech"
+        ]
+      },
+      "patientPopulation": [
+        "Trauma Care",
+        "Cardiac Emergencies",
+        "Stroke",
+        "Multi-System Trauma",
+        "Respiratory Distress",
+        "Post-Operative Care"
+      ],
+      "licenses": [
+        {
+          "state": "FL",
+          "expDate": "09/30/2025"
+        }
+      ],
+      "certifications": [
+        "ACLS",
+        "BLS",
+        "TNCC"
+      ],
+      "computerSystems": [
+        "Epic",
+        "Meditech"
+      ],
+      "workHistory": [
+        {
+          "unit": "Emergency Department",
+          "position": "Staff",
+          "facility": "Jackson Memorial Hospital",
+          "facilityType": "1100 Bed Level I Trauma & Teaching Facility",
+          "location": "Miami, FL",
+          "startDate": "06/2022",
+          "endDate": "Present",
+          "bedCount": 85,
+          "floatAreas": [
+            "Trauma",
+            "Med/Surg"
+          ]
+        }
+      ],
+      "education": {
+        "school": "University of Miami",
+        "location": "Miami, FL",
+        "degree": "Bachelor of Science",
+        "major": "Nursing",
+        "graduationDate": "05/2020"
+      }
+    },
+    {
+      "id": "N002",
+      "name": "Sarah Chen",
+      "phoneNumber": "(415) 555-9876",
+      "highlights": {
+        "yearsOfExperience": 7,
+        "specialtyExperience": "6+ Years of ICU Experience",
+        "otherExperience": [
+          "CVICU",
+          "MICU"
+        ],
+        "facilitiesExperience": "Level II Trauma Center Experience",
+        "licenses": [
+          "Multi-State RN License"
+        ],
+        "education": "MSN",
+        "languages": [
+          "English",
+          "Mandarin"
+        ],
+        "chartingExperience": [
+          "Epic",
+          "Cerner"
+        ]
+      },
+      "patientPopulation": [
+        "Ventilator Management",
+        "Post-Cardiac Surgery",
+        "ECMO",
+        "Septic Shock",
+        "Multiple Organ Failure"
+      ],
+      "licenses": [
+        {
+          "state": "CA",
+          "expDate": "04/30/2025"
+        },
+        {
+          "state": "WA",
+          "expDate": "04/30/2025"
+        }
+      ],
+      "certifications": [
+        "CCRN",
+        "ACLS",
+        "BLS"
+      ],
+      "computerSystems": [
+        "Epic",
+        "Cerner"
+      ],
+      "workHistory": [
+        {
+          "unit": "CVICU",
+          "position": "Charge Nurse",
+          "facility": "Stanford Medical Center",
+          "facilityType": "613 Bed Level I Trauma & Teaching Facility",
+          "location": "Palo Alto, CA",
+          "startDate": "01/2020",
+          "endDate": "Present",
+          "bedCount": 32,
+          "floatAreas": [
+            "ICU",
+            "MICU"
+          ]
+        }
+      ],
+      "education": {
+        "school": "University of California San Francisco",
+        "location": "San Francisco, CA",
+        "degree": "Master of Science",
+        "major": "Nursing",
+        "graduationDate": "05/2018"
+      }
+    },
+    {
+      "id": "N003",
+      "name": "Michael Thompson",
+      "phoneNumber": "(972) 555-3456",
+      "highlights": {
+        "yearsOfExperience": 8.5,
+        "specialtyExperience": "8+ Years of Oncology Experience",
+        "otherExperience": [
+          "Bone Marrow Transplant",
+          "Palliative Care"
+        ],
+        "facilitiesExperience": "Comprehensive Cancer Center Experience",
+        "licenses": [
+          "Multi-State RN License"
+        ],
+        "education": "BSN",
+        "languages": [
+          "English"
+        ],
+        "chartingExperience": [
+          "Epic"
+        ]
+      },
+      "patientPopulation": [
+        "Chemotherapy Administration",
+        "Immunotherapy",
+        "Stem Cell Transplant",
+        "Oncologic Emergencies",
+        "Pain Management"
+      ],
+      "licenses": [
+        {
+          "state": "TX",
+          "expDate": "11/30/2025"
+        },
+        {
+          "state": "AZ",
+          "expDate": "11/30/2025"
+        }
+      ],
+      "certifications": [
+        "OCN",
+        "BLS",
+        "ONS Chemotherapy & Biotherapy"
+      ],
+      "computerSystems": [
+        "Epic"
+      ],
+      "workHistory": [
+        {
+          "unit": "Oncology",
+          "position": "Staff",
+          "facility": "MD Anderson Cancer Center",
+          "facilityType": "692 Bed Comprehensive Cancer Center",
+          "location": "Houston, TX",
+          "startDate": "03/2019",
+          "endDate": "Present",
+          "bedCount": 45,
+          "floatAreas": [
+            "BMT",
+            "Medical Oncology"
+          ]
+        }
+      ],
+      "education": {
+        "school": "Texas Woman's University",
+        "location": "Houston, TX",
+        "degree": "Bachelor of Science",
+        "major": "Nursing",
+        "graduationDate": "12/2016"
+      }
+    },
+    {
+      "id": "N004",
+      "name": "Emily Parker",
+      "phoneNumber": "(617) 555-7890",
+      "highlights": {
+        "yearsOfExperience": 5,
+        "specialtyExperience": "4+ Years of L&D Experience",
+        "otherExperience": [
+          "Postpartum",
+          "NICU"
+        ],
+        "facilitiesExperience": "Teaching Hospital Experience",
+        "licenses": [
+          "Multi-State RN License"
+        ],
+        "education": "BSN",
+        "languages": [
+          "English"
+        ],
+        "chartingExperience": [
+          "Epic",
+          "Cerner"
+        ]
+      },
+      "patientPopulation": [
+        "High-Risk Pregnancy",
+        "C-Section Recovery",
+        "Postpartum Care",
+        "Neonatal Assessment",
+        "Maternal Complications"
+      ],
+      "licenses": [
+        {
+          "state": "MA",
+          "expDate": "06/30/2026"
+        }
+      ],
+      "certifications": [
+        "RNC-OB",
+        "BLS",
+        "NRP"
+      ],
+      "computerSystems": [
+        "Epic",
+        "Cerner"
+      ],
+      "workHistory": [
+        {
+          "unit": "Labor & Delivery",
+          "position": "Staff",
+          "facility": "Brigham and Women's Hospital",
+          "facilityType": "793 Bed Teaching Hospital",
+          "location": "Boston, MA",
+          "startDate": "07/2021",
+          "endDate": "Present",
+          "bedCount": 30,
+          "floatAreas": [
+            "Postpartum",
+            "Antepartum"
+          ]
+        }
+      ],
+      "education": {
+        "school": "Boston College",
+        "location": "Boston, MA",
+        "degree": "Bachelor of Science",
+        "major": "Nursing",
+        "graduationDate": "05/2019"
+      }
+    },
+    {
+      "id": "N005",
+      "name": "David Williams",
+      "phoneNumber": "(702) 555-2468",
+      "highlights": {
+        "yearsOfExperience": 3,
+        "specialtyExperience": "3+ Years of Med/Surg Experience",
+        "otherExperience": [
+          "Telemetry",
+          "Orthopedics"
+        ],
+        "facilitiesExperience": "Level III Trauma Facility Experience",
+        "licenses": [
+          "Multi-State RN License"
+        ],
+        "education": "ADN",
+        "languages": [
+          "English"
+        ],
+        "chartingExperience": [
+          "Meditech"
+        ]
+      },
+      "patientPopulation": [
+        "Post-Operative Care",
+        "Diabetes Management",
+        "Wound Care",
+        "Pain Management",
+        "Joint Replacement"
+      ],
+      "licenses": [
+        {
+          "state": "NV",
+          "expDate": "08/31/2025"
+        }
+      ],
+      "certifications": [
+        "BLS",
+        "ACLS"
+      ],
+      "computerSystems": [
+        "Meditech"
+      ],
+      "workHistory": [
+        {
+          "unit": "Medical/Surgical",
+          "position": "Staff",
+          "facility": "Sunrise Hospital",
+          "facilityType": "290 Bed Level III Trauma Facility",
+          "location": "Las Vegas, NV",
+          "startDate": "09/2022",
+          "endDate": "Present",
+          "bedCount": 40,
+          "floatAreas": [
+            "Telemetry",
+            "Orthopedics"
+          ]
+        }
+      ],
+      "education": {
+        "school": "College of Southern Nevada",
+        "location": "Las Vegas, NV",
+        "degree": "Associate Degree",
+        "major": "Nursing",
+        "graduationDate": "05/2021"
+      }
+    },
+    {
+      "id": "N006",
+      "name": "Robert Kim",
+      "phoneNumber": "(312) 555-1122",
+      "highlights": {
+        "yearsOfExperience": 12,
+        "specialtyExperience": "10+ Years of PACU Experience",
+        "otherExperience": [
+          "Pre-Op",
+          "Same Day Surgery"
+        ],
+        "facilitiesExperience": "Major Metropolitan Hospital Experience",
+        "licenses": [
+          "Multi-State RN License"
+        ],
+        "education": "MSN",
+        "languages": [
+          "English",
+          "Korean"
+        ],
+        "chartingExperience": [
+          "Epic",
+          "Sunrise"
+        ]
+      },
+      "patientPopulation": [
+        "Post-Anesthesia Care",
+        "Airway Management",
+        "Pain Control",
+        "Complex Surgical Cases",
+        "Pediatric Recovery"
+      ],
+      "licenses": [
+        {
+          "state": "IL",
+          "expDate": "05/31/2026"
+        },
+        {
+          "state": "IN",
+          "expDate": "05/31/2026"
+        }
+      ],
+      "certifications": [
+        "CPAN",
+        "ACLS",
+        "BLS",
+        "PALS"
+      ],
+      "computerSystems": [
+        "Epic",
+        "Sunrise"
+      ],
+      "workHistory": [
+        {
+          "unit": "PACU",
+          "position": "Charge Nurse",
+          "facility": "Northwestern Memorial Hospital",
+          "facilityType": "894 Bed Academic Medical Center",
+          "location": "Chicago, IL",
+          "startDate": "08/2016",
+          "endDate": "Present",
+          "bedCount": 36,
+          "floatAreas": [
+            "Pre-Op",
+            "Same Day Surgery"
+          ]
+        }
+      ],
+      "education": {
+        "school": "Rush University",
+        "location": "Chicago, IL",
+        "degree": "Master of Science",
+        "major": "Nursing",
+        "graduationDate": "05/2012"
+      }
+    },
+    {
+      "id": "N007",
+      "name": "Amanda Foster",
+      "phoneNumber": "(503) 555-3344",
+      "highlights": {
+        "yearsOfExperience": 6,
+        "specialtyExperience": "5+ Years of Pediatric ICU Experience",
+        "otherExperience": [
+          "Pediatric ER",
+          "Transport Team"
+        ],
+        "facilitiesExperience": "Children's Hospital Experience",
+        "licenses": [
+          "Multi-State RN License"
+        ],
+        "education": "BSN",
+        "languages": [
+          "English",
+          "French"
+        ],
+        "chartingExperience": [
+          "Epic",
+          "Cerner"
+        ]
+      },
+      "patientPopulation": [
+        "Pediatric Critical Care",
+        "Respiratory Failure",
+        "Post-Surgical Care",
+        "Trauma",
+        "Congenital Conditions"
+      ],
+      "licenses": [
+        {
+          "state": "OR",
+          "expDate": "07/31/2025"
+        },
+        {
+          "state": "WA",
+          "expDate": "07/31/2025"
+        }
+      ],
+      "certifications": [
+        "CCRN-P",
+        "PALS",
+        "BLS",
+        "ACLS"
+      ],
+      "computerSystems": [
+        "Epic",
+        "Cerner"
+      ],
+      "workHistory": [
+        {
+          "unit": "PICU",
+          "position": "Staff",
+          "facility": "OHSU Doernbecher Children's Hospital",
+          "facilityType": "151 Bed Children's Hospital",
+          "location": "Portland, OR",
+          "startDate": "06/2019",
+          "endDate": "Present",
+          "bedCount": 20,
+          "floatAreas": [
+            "Pediatric ER",
+            "Transport"
+          ]
+        }
+      ],
+      "education": {
+        "school": "Oregon Health & Science University",
+        "location": "Portland, OR",
+        "degree": "Bachelor of Science",
+        "major": "Nursing",
+        "graduationDate": "06/2018"
+      }
+    }
+  ]
+}
