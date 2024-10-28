@@ -11,6 +11,10 @@ import instructor
 import openai
 import os
 from dotenv import load_dotenv
+import asyncio
+
+APP_TITLE = "Resume Builder"
+APP_ICON = "👩‍💼"
 
 load_dotenv()
  # create an azure openai client
@@ -116,6 +120,7 @@ def resume_agent_factory(fields_to_check:ResumeChecklist, resume_md:str, templat
         tools,
         llm=llm,
         system_prompt=system_prompt,
+        streaming=True,
     )
 
 def run_agent_loop(resume_checklist: ResumeChecklist, resume_md: str, template_md: str):
@@ -145,109 +150,147 @@ def run_agent_loop(resume_checklist: ResumeChecklist, resume_md: str, template_m
         root_memory.set(new_history)
         print(response)
 
-
-if 'done_loading_resume' not in st.session_state:
-    st.session_state.done_loading_resume = False
-
-if 'done_loading_template' not in st.session_state:
-    st.session_state.done_loading_template = False
-
-if 'done_loading_all' not in st.session_state:
-    st.session_state.done_loading_all = False   
-
-# allow user to upload resume
-resume = st.file_uploader("Upload your resume", type=["pdf"])
-
-if resume:
-    st.session_state.done_loading_resume = True
-
-# allow user to upload template
-template = st.file_uploader("Upload your template", type=["md"])
-if template:
-    st.session_state.done_loading_template = True    
-
-st.session_state.done_loading_all = st.session_state.done_loading_resume and st.session_state.done_loading_template
-
 def convert_pdf_to_md(pdf_file: bytes) -> str:
-   
-   # save the pdf file to a temporary location
-   with open('temp.pdf', 'wb') as f:
-       f.write(pdf_file)
-
-   # convert the pdf file to markdown
-   markdown_content = pymupdf4llm.to_markdown('temp.pdf')
-
-   return markdown_content  
-
-if 'ready_to_validate' not in st.session_state:
-    st.session_state.ready_to_validate = False  
-
-if st.session_state.done_loading_all and not st.session_state.ready_to_validate:
-    st.title('Resume Validator')
-
-    # load resume and template
-    if 'pdf_converted' not in st.session_state:
-        st.session_state.pdf_converted = False
-
-    if not st.session_state.pdf_converted:
-        bytes_data = resume.getvalue()
-
-        resume_md = convert_pdf_to_md(bytes_data)   
-        st.session_state.resume_md = resume_md
-        st.session_state.pdf_converted = True
-
-    if 'template_md' not in st.session_state:
-        st.session_state.template_md = None
-
-    if st.session_state.template_md is None:
-        stringio = StringIO(template.getvalue().decode("utf-8"))
-        string_data = stringio.read()
-        st.session_state.template_md = string_data
-
-    st.session_state.ready_to_validate = True
-
-if 'ready_to_help_with_resume' not in st.session_state:
-    st.session_state.ready_to_help_with_resume = False
-
-if st.session_state.ready_to_validate and not st.session_state.ready_to_help_with_resume:
-    # initialize checklist
-    if 'checklist' not in st.session_state:
-        st.session_state.checklist = validate_resume(st.session_state.resume_md, 
-                                                                        st.session_state.template_md)
-        
-    st.write(st.session_state.checklist)
-    st.session_state.ready_to_help_with_resume = True
-
-
-if st.session_state.ready_to_help_with_resume:
-
-    if 'root_memory' not in st.session_state:
-        st.session_state.root_memory = ChatMemoryBuffer.from_defaults(token_limit=8000)
-    else:
-        root_memory = st.session_state.root_memory
-
-    # initialize chat history
-    if 'chat_history' not in st.session_state:
-        st.session_state.chat_history = []
-    # allow user to input prompt
-    if prompt := st.chat_input("You:"):
-        st.session_state.chat_history.append(f"You: {prompt}")
-        current_history = root_memory.get()
-        new_fields = {}
-
-        agent = resume_agent_factory(st.session_state.checklist, 
-                                     st.session_state.resume_md, 
-                                     st.session_state.template_md, new_fields)
-        
-        response = agent.chat(prompt, chat_history=current_history)
-        st.session_state.chat_history.append(f"Assistant: {response}")
-
-        new_history = agent.memory.get_all()
-        root_memory.set(new_history)
-        st.session_state.root_memory = root_memory
-        print(response)
-    # display chat history
     
-    for message in st.session_state.chat_history:
-        st.write(message)
+    # save the pdf file to a temporary location
+    with open('temp.pdf', 'wb') as f:
+        f.write(pdf_file)
+
+    # convert the pdf file to markdown
+    markdown_content = pymupdf4llm.to_markdown('temp.pdf')
+
+    return markdown_content  
+
+
+async def main() -> None:
+
+    st.set_page_config(page_title=APP_TITLE, page_icon=APP_ICON)
+   
+    st.sidebar.image("evo-logo.jpg")
+    
+
+    if 'done_loading_resume' not in st.session_state:
+        st.session_state.done_loading_resume = False
+
+    if 'done_loading_template' not in st.session_state:
+        st.session_state.done_loading_template = False
+
+    if 'done_loading_all' not in st.session_state:
+        st.session_state.done_loading_all = False   
+
+    # allow user to upload resume
+    resume = st.file_uploader("Upload your resume", type=["pdf"])
+
+    if resume:
+        st.session_state.done_loading_resume = True
+
+    # allow user to upload template
+    template = st.file_uploader("Upload your template", type=["md"])
+    if template:
+        st.session_state.done_loading_template = True    
+
+    st.session_state.done_loading_all = st.session_state.done_loading_resume and st.session_state.done_loading_template
+
+    if 'ready_to_validate' not in st.session_state:
+        st.session_state.ready_to_validate = False  
+
+    if st.session_state.done_loading_all and not st.session_state.ready_to_validate:
+        st.title('Resume Validator')
+
+        # load resume and template
+        if 'pdf_converted' not in st.session_state:
+            st.session_state.pdf_converted = False
+
+        if not st.session_state.pdf_converted:
+            bytes_data = resume.getvalue()
+
+            resume_md = convert_pdf_to_md(bytes_data)   
+            st.session_state.resume_md = resume_md
+            st.session_state.pdf_converted = True
+
+        if 'template_md' not in st.session_state:
+            st.session_state.template_md = None
+
+        if st.session_state.template_md is None:
+            stringio = StringIO(template.getvalue().decode("utf-8"))
+            string_data = stringio.read()
+            st.session_state.template_md = string_data
+
+        st.session_state.ready_to_validate = True
+
+    if 'ready_to_help_with_resume' not in st.session_state:
+        st.session_state.ready_to_help_with_resume = False
+
+    if st.session_state.ready_to_validate and not st.session_state.ready_to_help_with_resume:
+        # initialize checklist
+        if 'checklist' not in st.session_state:
+            st.session_state.checklist = validate_resume(st.session_state.resume_md, 
+                                                                            st.session_state.template_md)
             
+        st.session_state.ready_to_help_with_resume = True
+
+
+    if st.session_state.ready_to_help_with_resume:
+
+        if 'root_memory' not in st.session_state:
+            st.session_state.root_memory = ChatMemoryBuffer.from_defaults(token_limit=8000)
+        else:
+            root_memory = st.session_state.root_memory
+
+        # initialize chat history
+        if 'chat_history' not in st.session_state:
+            st.session_state.chat_history = []
+
+        if 'messages' not in st.session_state:
+            st.session_state.messages = []
+
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+
+        # allow user to input prompt
+        if prompt := st.chat_input("You:"):
+
+             # add user message to chat history
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            
+            with st.chat_message("user"):
+                st.markdown(prompt)
+
+            with st.chat_message("assistant", avatar="🤖"):
+
+                current_history = root_memory.get()
+                new_fields = {}
+
+                agent = resume_agent_factory(st.session_state.checklist, 
+                                            st.session_state.resume_md, 
+                                            st.session_state.template_md, new_fields)
+                
+                st.sidebar.write(st.session_state.checklist.model_dump_json(indent=2))
+                
+                response = agent.stream_chat(prompt, chat_history=current_history)
+
+
+                response = st.write_stream(response.response_gen)
+            
+                # update chat history
+                new_history = agent.memory.get_all()
+                root_memory.set(new_history)
+                st.session_state.root_memory = root_memory
+                
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            print(response)
+
+              
+
+            #new_message = f"Assistant: {response}"
+            #st.session_state.chat_history.append(new_message)
+            # st.write(new_message)  
+            # Display assistant response in chat message container
+            
+
+           
+
+if __name__ == "__main__":
+    asyncio.run(main())
