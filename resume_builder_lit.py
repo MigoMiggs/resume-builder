@@ -89,17 +89,24 @@ def resume_agent_factory(fields_to_check:ResumeChecklist, resume_md:str, templat
         print("******* new field *********")
         new_fields[field_name] = field_value
         setattr(fields_to_check, field_name, True)
+        st.session_state.checklist = fields_to_check
         return (f"Setting {field_name} to {field_value}")
 
-    def done() -> None:
+    def done() -> str:
         """When you completed your task, call this tool."""
         print("resume checklist is done")
+       
         fields_to_check.still_have_missing_fields = False
+        st.session_state.checklist = fields_to_check
+
+        return "You have completed the resume checklist, you can now generate the resume. This is the final resume: "
 
     tools = [
         FunctionTool.from_defaults(fn=set_missing_field),
         FunctionTool.from_defaults(fn=done),
     ]
+
+    #st.sidebar.write(fields_to_check.model_dump_json(indent=2))
 
     system_prompt = (f"""
         You are a helpful assistant that is helping complete a resume checklist.
@@ -162,59 +169,51 @@ def convert_pdf_to_md(pdf_file: bytes) -> str:
     return markdown_content  
 
 
+def load_template() -> str:
+    """Load the resume template from local file"""
+    with open('resume_template.md', 'r') as f:
+        return f.read()
+
 async def main() -> None:
 
     st.set_page_config(page_title=APP_TITLE, page_icon=APP_ICON)
    
     st.sidebar.image("evo-logo.jpg")
+    st.title('Resume Validator / Builder')
     
 
     if 'done_loading_resume' not in st.session_state:
         st.session_state.done_loading_resume = False
 
-    if 'done_loading_template' not in st.session_state:
-        st.session_state.done_loading_template = False
-
     if 'done_loading_all' not in st.session_state:
         st.session_state.done_loading_all = False   
 
-    # allow user to upload resume
-    resume = st.file_uploader("Upload your resume", type=["pdf"])
-
-    if resume:
-        st.session_state.done_loading_resume = True
-
-    # allow user to upload template
-    template = st.file_uploader("Upload your template", type=["md"])
-    if template:
-        st.session_state.done_loading_template = True    
-
-    st.session_state.done_loading_all = st.session_state.done_loading_resume and st.session_state.done_loading_template
 
     if 'ready_to_validate' not in st.session_state:
         st.session_state.ready_to_validate = False  
 
-    if st.session_state.done_loading_all and not st.session_state.ready_to_validate:
-        st.title('Resume Validator')
+    if not st.session_state.done_loading_all:
+        # allow user to upload resume
+        resume = st.file_uploader("Upload your resume", type=["pdf"])
 
-        # load resume and template
+        if resume:
+            st.session_state.done_loading_resume = True
+            st.session_state.done_loading_all = True  # Since we don't need template upload anymore
+
+    if st.session_state.done_loading_all and not st.session_state.ready_to_validate:
+        # load resume
         if 'pdf_converted' not in st.session_state:
             st.session_state.pdf_converted = False
 
         if not st.session_state.pdf_converted:
             bytes_data = resume.getvalue()
-
             resume_md = convert_pdf_to_md(bytes_data)   
             st.session_state.resume_md = resume_md
             st.session_state.pdf_converted = True
 
+        # Load template from local file
         if 'template_md' not in st.session_state:
-            st.session_state.template_md = None
-
-        if st.session_state.template_md is None:
-            stringio = StringIO(template.getvalue().decode("utf-8"))
-            string_data = stringio.read()
-            st.session_state.template_md = string_data
+            st.session_state.template_md = load_template()
 
         st.session_state.ready_to_validate = True
 
@@ -225,7 +224,7 @@ async def main() -> None:
         # initialize checklist
         if 'checklist' not in st.session_state:
             st.session_state.checklist = validate_resume(st.session_state.resume_md, 
-                                                                            st.session_state.template_md)
+                                                        st.session_state.template_md)
             
         st.session_state.ready_to_help_with_resume = True
 
@@ -250,7 +249,7 @@ async def main() -> None:
 
 
         # allow user to input prompt
-        if prompt := st.chat_input("You:"):
+        if prompt := st.chat_input("Enter questions about how to complete the resume"):
 
              # add user message to chat history
             st.session_state.messages.append({"role": "user", "content": prompt})
@@ -267,8 +266,6 @@ async def main() -> None:
                                             st.session_state.resume_md, 
                                             st.session_state.template_md, new_fields)
                 
-                st.sidebar.write(st.session_state.checklist.model_dump_json(indent=2))
-                
                 response = agent.stream_chat(prompt, chat_history=current_history)
 
 
@@ -280,15 +277,6 @@ async def main() -> None:
                 st.session_state.root_memory = root_memory
                 
             st.session_state.messages.append({"role": "assistant", "content": response})
-            print(response)
-
-              
-
-            #new_message = f"Assistant: {response}"
-            #st.session_state.chat_history.append(new_message)
-            # st.write(new_message)  
-            # Display assistant response in chat message container
-            
 
            
 
